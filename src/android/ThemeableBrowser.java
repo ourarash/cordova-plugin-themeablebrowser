@@ -20,6 +20,8 @@ package com.initialxy.cordova.themeablebrowser;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.Display;
+import android.graphics.Point;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -935,7 +937,13 @@ public class ThemeableBrowser extends CordovaPlugin {
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(dialog.getWindow().getAttributes());
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                
+                //Ari: Changed to keep the status bar
+                Display display = cordova.getActivity().getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                lp.height = size.y;  
+                //lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
                 dialog.setContentView(main);
                 dialog.show();
